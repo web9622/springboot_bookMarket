@@ -1,0 +1,42 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container py-4">
+    <th:block th:replace="~{/module/header}"></th:block>
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">로그인</h1>
+            <p class="col-md-8 fs-4">BookMarket</p>
+        </div>
+    </div>
+
+    <div class="row align-items-md-stretch text-center">
+        <div class="container col-md-5">
+            <div class="text-center">
+                <h3 class="form-signin-heading">Please sign in</h3>
+            </div>
+            <div class="alert alert-danger" th:if="${error}">
+                UserName과 Password가 올바르지 않습니다.<br/>
+            </div>
+
+            <form method="post" th:action="@{/perform_login}">
+                <div class="mb-3 row">
+                    <input type="text" name="username" class="form-control" placeholder="User Name" required autofocus>
+                </div>
+                <div class="mb-3 row">
+                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                </div>
+                <div class="mb-3 row">
+                    <button class="btn btn-lg btn-success btn-block" type="submit">로그인</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

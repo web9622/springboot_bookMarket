@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/BookMarket/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+ a {
+ text-decoration:none;
+ }
+
+
+
+
+
+    </style>
+</head>
+<body>
+<div class="container py-4">
+    <th:block th:replace="~{/module/header}"></th:block>
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">게시판 목록</h1>
+            <p class="col-md-8 fs-4">BookMarket</p>
+        </div>
+    </div>
+    <div class="row align-items-md-stretch">
+        <div style="padding-top: 50px">
+            <div class="text-end" style="padding-right:30px">전체 게시글:[[${totalItems}]]</div>
+            <table class="table">
+                <thead class="thead-light">
+                <tr class="text-center">
+                    <th>
+                        #<a th:href="@{/board/page(pageNum=${currentPage}, sortField='id', sortDir=${reverseSortDir})}"><span
+                            th:text="${reverseSortDir}=='asc'? '▼': '▲'"></span></a></th>
+                    <th>제목<a
+                            th:href="@{/board/page(pageNum=${currentPage}, sortField='title', sortDir=${reverseSortDir})}"><span
+                            th:text="${reverseSortDir}=='asc'? '▼': '▲'"></span></a></th>
+                    <th>작성자<a
+                            th:href="@{/board/page(pageNum=${currentPage}, sortField='writer', sortDir=${reverseSortDir})}"><span
+                            th:text="${reverseSortDir}=='asc'? '▼': '▲'"></span></a></th>
+                    <th>작성일<a
+                            th:href="@{/board/page(pageNum=${currentPage}, sortField='createdDate', sortDir=${reverseSortDir})}"><span
+                            th:text="${reverseSortDir}=='asc'? '▼': '▲'"></span></a></th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="text-center" th:each="board : ${listBoard}">
+                    <th scope="row"><span th:text="${board.id}"></span></th>
+                    <td>
+                        <a th:href="@{'/board/view/'+${board.id}}">
+                            <span th:text="${board.title}"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <span th:text="${board.writer}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div>&nbsp;</div>
+            <div><i>Sorted by [[${sortField}]] inf [[${sortDir}]] board</i></div>
+            <div>&nbsp;</div>
+            <div th:if="${totalPages>1}" class="text-center">
+
+                <a th:if="${currentPage>1}"
+                   th:href="@{/board/page(pageNum=1, sortField=${sortField}, sortDir=${sortDir})}">First</a>
+
+                <span th:unless="${currentPage>1}">First</span>
+                &nbsp;&nbsp;
+
+                <a th:if="${currentPage>1}"
+                   th:href="@{/board/page(pageNum=${currentPage-1}, sortField=${sortField}, sortDir=${sortDir})}">Previous</a>
+                <span th:unless="${currentPage>1}">Previous</span>
+                &nbsp;&nbsp;
+                <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                    <a th:if="${i != currentPage}"
+                       th:href="@{/board/page(pageNum=${i}, sortField=${sortField}, sortDir=${sortDir})}">
+
+                       [[${i}]]
+
+                    </a>
+                    <span th:unless="${i != currentPage}"><b>[[${i}]]</b></span>
+                    &nbsp;
+                </span>
+
+                <a th:if="${currentPage<totalPages}"
+                   th:href="@{/board/page(pageNum=${currentPage+1}, sortField=${sortField}, sortDir=${sortDir})}">Next</a>
+                <span th:unless="${currentPage < totalPages}">Next</span>
+                &nbsp;&nbsp;
+                <a th:if="${currentPage < totalPages}"
+                   th:href="@{/board/page(pageNum=${totalPages}, sortField=${sortField}, sortDir=${sortDir})}">Last</a>
+                <!--                <a th:if="${currentPage < totalPages}" th:href="@{'/board/page?pageNum='-->
+                <!--+ ${totalPages} + '&sortField=' + ${sortField} + '&sortDir=' +-->
+                <!--${sortDir}}">Last</a>-->
+                <span th:unless="${currentPage < totalPages}">Last</span>
+
+            </div>
+            <div class="row" style="padding-top: 20px">
+                <div class="col-auto mr-auto"></div>
+                <div class="col-auto">
+                    <a sec:authorize="isAuthenticated()" class="btn btn-primary" th:href="@{/board/write}"
+                       role="button">글쓰기</a>
+                </div>
+            </div>
+            <th:block th:replace="~{/module/footer}"></th:block>
+        </div>
+    </div>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+</body>
+</html>

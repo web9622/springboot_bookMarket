@@ -1,0 +1,28 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>주문 완료</title>
+    <link href="/BookMarket/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container py-4">
+    <th:block th:replace="~{/module/header}"></th:block>
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">주문 완료</h1>
+            <p class="col-md-8 fs-4">BookMarket</p>
+        </div>
+    </div>
+
+    <div class="row align-items-md-stretch">
+        <div class="container">
+            <h2 class="alert alert-danger">주문해 주셔서 감사합니다.</h2>
+            <p>주문은 [[${order.shipping.date}]]에 배송될 예정입니다! !</p>
+            <p>주문번호 : [[ ${order.orderId}]]</p>
+        </div>
+    </div>
+    <br>
+    <p><a href="/BookMarket/books" class="btn btn-primary"> &laquo; 도서목록</a></p>
+
+</body>
+</html>

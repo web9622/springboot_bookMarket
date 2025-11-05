@@ -1,0 +1,125 @@
+<html>
+<head> 	
+	<title>주문 정보</title>
+	<link href="/BookMarket/css/bootstrap.min.css" rel="stylesheet" >
+</head>
+<body>
+<div class="container py-4">
+    <th:block th:replace="~{/module/header}"></th:block>
+
+	<div class="p-5 mb-4 bg-body-tertiary rounded-3">
+ 		<div class="container-fluid py-5">
+			<h1 class="display-5 fw-bold">주문 정보 </h1>
+			<p class="col-md-8 fs-4">BookMarket</p>       
+		</div>
+		
+	</div>	
+   <div class="row align-items-md-stretch"> 
+     <div class="container  col-md-10  py-5" style="background:#fafafe">     
+        <form th:object="${order}" action="/BookMarket/order/save"    method="post" >
+          <input type="hidden" name="orderId" th:field="*{orderId}"  />      
+         <input type="hidden" name="shipping.id" th:field="*{shipping.id}" />
+          
+         <div class="row  text-left">           
+             <strong>배송 주소</strong><br> 
+            <div class="mb-3 row">
+        		 <label class="col-sm-2 control-label"> 성명  </label>
+         		<div class="col-sm-3">
+            		 <input type="text" name="shipping.name" th:field="*{shipping.name}" >
+         		</div>                    
+         	 </div>     
+         	   <div class="mb-3 row">
+        		 <label class="col-sm-2 control-label"> 국가  </label>
+         		<div class="col-sm-3">
+            		<input type="text" name="shipping.address.country" th:field="*{shipping.address.country}" >
+         		</div>                    
+         	 </div>      
+              <div class="mb-3 row">
+        		 <label class="col-sm-2 control-label"> 우편번호  </label>
+         		<div class="col-sm-3">
+            		<input type="text" name="shipping.address.zipcode" th:field="*{shipping.address.zipcode}" >
+         		</div>                    
+         	 </div>      
+               <div class="mb-3 row">
+        		 <label class="col-sm-2 control-label">  주소  </label>
+         		<div class="col-sm-3">
+            		<input type="text" name="shipping.address.addressname" th:field="*{shipping.address.addressname}" >
+         		</div>                    
+         	 </div>  
+         	 
+         	   <div class="mb-5 row">
+        		 <label class="col-sm-2 control-label"> 상세주소  </label>
+         		<div class="col-sm-3">
+            		<input type="text" name="shipping.address.detailname" th:field="*{shipping.address.detailname}" >
+         		</div>                    
+         	 </div>                 
+          </div>          
+             <div class="mb-3 row">
+        		 <label class="col-sm-2 control-label"> 배송일 </label>
+         		<div class="col-sm-3">
+            		<input type="text" name="shipping.date" th:field="*{shipping.date}" >
+         		</div>                    
+         	 </div>   	 
+          
+    
+      <div class="row text-left">
+          <address> 
+              <strong>청구주소</strong> <br>              
+               성명 : [[${order.customer.name}]]<br>
+               우편번호 :[[${order.customer.address.zipcode}]]<br>
+               주소 : [[${order.customer.address.addressname}]] [[${order.customer.address.detailname}]] ([[${order.customer.address.country}]])<br>
+                  HP : [[${order.customer.phone}]]<br>
+             </address>       
+          </div>
+       </div>  
+      
+       <div class="row  py-2">
+          <table class="table table-hover">
+          <thead>
+           <tr><th>도서</th>
+              <th>수량</th>
+              <th class="text-center">가격</th>
+               <th class="text-center">소계</th>
+            </tr>
+            </thead>
+             <tbody>
+          
+            <div class="col-md-4" th:each="cartItem:${order.orderItems}">                 
+             <tr>                                 	
+                	 
+                <td >  
+               	 <em th:each="book:${bookList}" th:if="${#strings.equals(book.bookId, cartItem.value.bookId)}">[[${book.name}]]</em>
+                </td>
+              
+               <td  style="text-align: center">[[${cartItem.value.quantity}]]</td>              	
+               <td class="text-center" >
+               	  <span th:each="book:${bookList}"  th:if="${#strings.equals(book.bookId, cartItem.value.bookId)}">[[${book.unitPrice}]]원</span> 
+               </td>              
+               
+               <td class="text-center">[[${cartItem.value.totalPrice}]]원</td>
+             </tr>
+             </div>          
+          
+       
+            <tr>
+             <td> </td>
+             <td> </td>
+             <td class="text-right"><h5> <strong>총액: </strong></h5></td>
+             <td class="text-center text-danger"><h4><strong>[[${order.grandTotal}]]</strong></h4></td>
+            </tr>  
+            </tbody>           
+           </table>
+         </div>   
+       
+      <div class="container col-md-12  py-3">
+     	<a href="/BookMarket/order/list"  class="btn btn-Secondary" role="button" >주문목록</a> 
+        
+         <button type="submit" class="btn btn-info" >수정</button>
+         <a th:href="@{'/order/delete/' + ${order.orderId}}"   class=" btn btn-danger" role="button" >삭제</a>     	   
+       </div>
+     </form>
+    </div>
+   </div>
+
+</body>
+</html>

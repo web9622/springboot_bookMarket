@@ -1,0 +1,83 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>주문목록</title>
+    <link href="/BookMarket/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/BookMarket/js/controllers.js"></script>
+</head>
+
+
+<body>
+<div class="container py-4">
+    <th:block th:replace="~{/module/header}"></th:block>
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">주문목록</h1>
+            <p class="col-md-8 fs-4">BookMarket</p>
+        </div>
+    </div>
+
+    <div class="row align-items-md-stretch">
+        <div class="text-end" style="padding-right:30px">
+            <form action="/BookMarket/logout" method="POST">
+                <input type="submit" class="btn btn-sm btn-success" value="Logout"/>
+            </form>
+        </div>
+        <div class="col-md-12">
+            <form name="clearForm" method="post">
+                <input type="hidden" name="_method" value="delete"/>
+                <a th:href="@{/order/deleteAll}" class="btn btn-danger" style="float:left">삭제하기</a>
+            </form>
+
+        </div>
+        <div style="padding-top: 50px">
+            <div class="text-end" style="padding-right:30px"> 전체 주문수: [[${totalItems}]]</div>
+            <table class="table table-hover">
+                <tr>
+                    <th>
+                        <a th:href="@{'/order/page?pageNum=' + ${currentPage} + '&sortField=orderId&sortDir=' + ${reverseSortDir}}">주문
+                            ID</a></th>
+                    <th>
+                        <a th:href="@{'/order/page?pageNum=' + ${currentPage} + '&sortField=customer_id&sortDir=' + ${reverseSortDir}}">고객
+                            ID</a></th>
+                    <th>
+                        <a th:href="@{'/order/page?pageNum=' + ${currentPage} + '&sortField=shipping_id&sortDir=' + ${reverseSortDir}}">베송지</a>
+                    </th>
+                    <th>
+                        <a th:href="@{'/order/page?pageNum=' + ${currentPage} + '&sortField=grandTotal&sortDir=' + ${reverseSortDir}}">총액</a>
+                    </th>
+                    <th>비고</th>
+                </tr>
+
+                <form name="removeForm" id="removeForm" method="post">
+                    <input type="hidden" name="_method" value="delete"/>
+
+                    <div th:each="order:${orderList}">
+                        <tr>
+                            <td th:text="${order.orderId}"/>
+                            </td>
+                            <td th:text="${order.customer.id}"/>
+                            </td>
+                            <td th:text="${order.shipping.address.addressname}"/>
+                            </td>
+                            <td th:text="${order.grandTotal}"/>
+                            </td>
+                            <td><a th:href="@{'/order/view/' + ${order.orderId}}"><span class="badge text-bg-secondary"
+                                                                                        th:text="상세보기"></span></a>
+                                <a th:href="@{'/order/edit/' + ${order.orderId}}"><span class="badge text-bg-info"
+                                                                                        th:text="수정"></span></a>
+                                <a th:href="@{'/order/delete/' + ${order.orderId}}"><span class="badge text-bg-danger"
+                                                                                          th:text="삭제"></span></a>
+                            </td>
+                        </tr>
+                    </div>
+                </form>
+            </table>
+            <div>&nbsp;</div>
+            <div><i>Sorted by [[${sortField}]] in [[${sortDir}]] order</i></div>
+            <div>&nbsp;</div>
+        </div>
+        <th:block th:replace="~{/module/footer}"></th:block>
+    </div>
+</body>
+</html>

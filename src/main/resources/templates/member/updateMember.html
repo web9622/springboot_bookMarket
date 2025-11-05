@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원정보 수정</title>
+    <link href="/BookMarket/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<script type="text/javascript">
+  function checkPasswd(){
+    // 비밀번호와 비밀번호 확인 항목이 일치하는지 검사
+    if(document.member.password.value != document.member.password_confirm.value){
+        alert("비밀번호가 일치하지 않습니다. 다시 입력해 주세요.");
+        document.member.password_confirm.focus();
+        return;
+    }
+    document.member.submit();
+  }
+
+
+
+</script>
+<body>
+<div class="container py-4">
+    <th:block th:replace="~{/module/header}"></th:block>
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">회원 수정</h1>
+            <p class="col-md-8 fs-4">BookMarket</p>
+        </div>
+    </div>
+    <div class="row align-items-md-stretch">
+        <form th:object="${memberFormDto}" name="member" action="/BookMarket/members/update" method="post">
+            <legend>회원 정보 수정</legend>
+            <div class="mb-3 row">
+                <label class="col-sm-2 control-label">회원 ID</label>
+                <div class="col-sm-3">
+                    <input type="text" name="memberId" class="form-control" th:field="*{memberId}" readonly/>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 control-label">이름</label>
+                <div class="col-sm-3">
+                    <input type="text" name="name" class="form-control" th:field="*{name}"/>
+                </div>
+                <div class="col-sm-6">
+                    <p class="text-danger" th:errors="*{name}"/>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 control-label">비밀번호</label>
+                <div class="col-sm-3">
+                    <input type="password" name="password" class="form-control" th:field="*{password}"/>
+                </div>
+                <div class="col-sm-6">
+                    <p class="text-danger" th:errors="*{password}"/>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 control-label">비밀번호 확인</label>
+                <div class="col-sm-3">
+                    <input type="password" name="password_confirm" class="form-control"/>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 control-label">이메일</label>
+                <div class="col-sm-3">
+                    <input type="email" name="email" class="form-control" th:field="*{email}"/>
+                </div>
+                <div class="col-sm-6">
+                    <p class="text-danger" th:errors="*{email}"/>
+                </div>
+                <div class="col-sm-6">
+                    <p class="text-danger" th:errors="*{email}"/>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 control-label">전화번호</label>
+                <div class="col-sm-3">
+                    <input type="text" name="phone" class="form-control" th:field="*{phone}"/>
+                </div>
+                <div class="col-sm-6">
+                    <p class="text-danger" th:errors="*{phone}"/>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 control-label">주소</label>
+                <div class="col-sm-5">
+                    <input type="text" name="address" cols="50" rows="2" class="form-control" th:field="*{address}"/>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <a th:href="'javascript:checkPasswd()'" class="btn btn-success">수정</a>
+                    <a th:href="@{'/members/delete/'}" class="btn btn-secondary">삭제</a>
+                    <input type="reset" class="btn btn-Secondary" value="취소"/>
+                </div>
+            </div>
+        </form>
+        <th:block th:replace="~{/module/footer}"></th:block>
+
+    </div>
+</body>
+</html>

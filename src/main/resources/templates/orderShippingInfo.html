@@ -1,0 +1,79 @@
+<html>
+<head> 	
+	<title>배송 정보</title>
+	<link href="/BookMarket/css/bootstrap.min.css" rel="stylesheet" >
+</head>
+<body>
+<div class="container py-4">
+    <th:block th:replace="~{/module/header}"></th:block>
+
+	<div class="p-5 mb-4 bg-body-tertiary rounded-3">
+ 		<div class="container-fluid py-5">
+			<h1 class="display-5 fw-bold">배송 정보 </h1>
+			<p class="col-md-8 fs-4">BookMarket</p>       
+		</div>
+		
+	</div>	
+   <div class="row align-items-md-stretch"> 
+   		
+      <form th:object="${shipping}" action="/BookMarket/order/orderShippingInfo" method="post" >
+    <!--   <input  type="hidden" name="cart"  class="form-control" th:value="${cart}"/>-->
+      <legend>배송 세부 사항</legend>
+      <div class="mb-3 row">
+         <label class="col-sm-2 control-label">성명</label>
+         <div class="col-sm-3">
+            <input  type="text" name="name"  class="form-control"   th:field="*{name}"/> 
+         </div>         
+      </div>
+      <div class="mb-3 row">
+         <label class="col-sm-2 control-label" >배송일</label>
+         <div class="col-sm-3">
+            <input   type="text" name="date"  class="form-control"   placeholder="yyyy/mm/dd" th:field="*{date}"/> 
+         </div> 
+           <div class="col-sm-6">
+        
+         <p class="text-danger" th:errors="*{date}"/>  
+      </div>  
+      
+           
+      </div>
+      <div class="mb-3 row">
+         <label class="col-sm-2 control-label" >국가명</label>
+         <div class="col-sm-3">					     
+           <input   type="text" name="address.country"  class="form-control"   th:field="*{address.country}"/> 
+         </div>
+      </div>
+   	  <div class="mb-3 row">
+         <label class="col-sm-2 control-label" >우편번호</label>
+         <div class="col-sm-3">
+           <input   type="text" name="address.zipCode" class="form-control"   th:field="*{address.zipCode}"/>
+         </div>
+      </div>
+      <div class="mb-3 row">
+         <label class="col-sm-2 control-label" >주소</label>
+         <div class="col-sm-5">	
+         <input  type="text" name="address.addressName"  class="form-control"  th:field="*{address.addressName}"/>
+         </div>		
+      </div>
+      <div class="mb-3 row">
+         <label class="col-sm-2 control-label" >세부주소</label>
+         <div class="col-sm-3">	
+          <input   type="text" name="address.detailAddress" class="form-control" th:field="*{address.detailAddress}"/>
+         </div>		
+      </div>
+        
+      <div class="mb-3 row">
+         <div class="col-sm-offset-2 col-sm-10" >
+           
+           <a href="/BookMarket/order/orderCustomerInfo"  class="btn btn-Secondary" role="button" >이전</a> 
+           <input type="submit" class="btn btn-primary" value="등록" />         
+  			<a href="/BookMarket/order/orderCancelled"  class="btn btn-Secondary" role="button" >취소</a> 
+
+	
+         </div>
+      </div>  
+      </form>
+       <th:block th:replace="~{/module/footer}"></th:block>
+  </div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<html>
+<head> 
+	<meta charset="UTF-8">
+	<title>도서 상세  정보</title>
+	<link href="/BookMarket/css/bootstrap.min.css" rel="stylesheet" >
+	<script th:inline="javascript">
+    // Thymeleaf를 사용하여 Context Path를 JS 변수에 할당합니다.
+    var contextPath = /*[[@{/}]]*/ '';
+    // 결과: var contextPath = '/BookMarket/';
+    </script>
+	<script src="/BookMarket/js/controllers.js"></script>
+	<script type="text/javascript">
+      // 이전 addToCart 함수가 주석 처리되어 있던 위치
+
+      function deleteConfirm(bookId) {
+         console.log("deleteConfirm 함수 실행됨. Book ID:", bookId);
+
+         // 사용자에게 삭제 여부 확인
+         if (confirm("정말로 도서를 삭제하시겠습니까?")) {
+            // 삭제를 위한 URL (예: /books/delete/{bookId})
+            const url = "/books/delete/" + bookId;
+
+            // 폼을 생성하여 POST 요청을 보냄
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = url;
+
+            document.body.appendChild(form);
+            form.submit();
+         }
+      }
+   </script>
+</head>
+<body>
+<div class="container py-4">
+	<th:block th:replace="~{/module/header}"></th:block>
+
+	<div class="p-5 mb-4 bg-body-tertiary rounded-3">
+ 		<div class="container-fluid py-5">
+			<h1 class="display-5 fw-bold">도서 정보</h1>
+			<p class="col-md-8 fs-4">BookMarket</p>       
+		</div>
+	</div>
+
+ 	<div class="row align-items-md-stretch">
+ 	   		<div class="col-md-4">
+		 		<img th:src="@{/upload/{fileName}(fileName=${book.fileName})}" style="width: 90%" />
+		 		<div class="text-center"> 	
+		 			<a th:href="@{/books/download(file=${book.fileName})}" >이미지다운로드</a>
+				</div>
+		 	</div>
+		<div class="col-md-8">
+			<h3 th:text ="${book.name}"></h3> 
+				<p th:text ="${book.description}"></p>
+				<br>
+			<p><b>도서코드 : </b><span class="badge text-bg-info" th:text ="${book.bookId}"></span></p>
+			<p><b>저자</b> : <span th:text ="${book.author}"></span></p>
+			<p><b>출판사</b> : <span th:text ="${book.publisher}"></span></p>
+			<p><b>출판일</b> : <span th:text ="${book.releaseDate}"></span></p>
+				<p><b>분류</b> : <span th:text ="${book.category}"></span></p>
+				<p><b>재고수</b> : <span th:text ="${book.unitsInStock}"></span></p>
+			<h4 th:text="${#numbers.formatDecimal(book.unitPrice, 0, 'COMMA', 0, 'POINT')} + '원'"></h4>
+<!--				<h4 th:text ="${book.unitPrice}+'원'"></h4>-->
+				<br>
+
+			<form method="post" th:action="@{/cart/book/{bookId}(bookId=${book.bookId})}" style="display:inline;">
+				<button type="submit" class="btn btn-warning">
+					장바구니에 추가 &raquo;
+				</button>
+			</form>
+
+			<div class="d-flex flex-wrap gap-2 mt-3">
+				<a th:href="@{/cart}" class="btn btn-info">
+					장바구니 보기 &raquo;
+				</a>
+
+				<a th:href="@{/books}" class="btn btn-secondary">
+					도서 목록 &raquo;
+				</a>
+
+				<a sec:authorize="hasRole('ROLE_ADMIN')"
+				   th:href="@{/books/update/{bookId}(bookId=${book.bookId})}"
+				   class="btn btn-info">
+					도서 수정 &raquo;
+				</a>
+
+				<a sec:authorize="hasRole('ROLE_ADMIN')"
+				   th:attr="onclick='deleteConfirm(\'' + ${book.bookId} + '\')'"
+				   class="btn btn-danger">
+					도서 삭제 &raquo;
+				</a>
+			</div>
+				
+		</div> 
+
+  </div>
+	<th:block th:replace="~{/module/footer}"></th:block>
+</div>
+
+</body>
+</html>

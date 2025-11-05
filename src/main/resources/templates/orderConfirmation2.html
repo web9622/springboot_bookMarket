@@ -1,0 +1,86 @@
+<html>
+<head>
+    <title>주문 정보</title>
+    <link href="/BookMarket/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container py-4">
+    <th:block th:replace="~{/module/header}"></th:block>
+
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">주문 정보 </h1>
+            <p class="col-md-8 fs-4">BookMarket</p>
+        </div>
+
+    </div>
+    <div class="row align-items-md-stretch">
+
+        <form th:object="${customer}" class="form-horizontal">
+            <div class="well col-md-9 col-md-offset-2" style="background:#fafafe; padding: 20px">
+                <div class="text-center">
+                    <h1>영수증</h1>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <address>
+                            <strong>배송 주소</strong> <br>
+                            성명 : [[${customer.name}]]<br>
+                            우편번호 : [[${customer.zipCode}]]<br>
+                            주소 : [[${customer.addressName}]] [[${customer.detailName}]] <br>
+                        </address>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <p><em>배송일: [[${customer.date}"]]</em></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9">
+                        <address>
+                            <strong>청구주소</strong> <br>
+                            성명 : [[${customer.name}]]<br>
+                            우편번호 :[[${customer.zipCode}]]<br>
+                            주소 : [[${customer.addressName}]] [[${customer.detailName}]]<br>
+                            HP : [[${customer.phone}]}<br>
+                        </address>
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>도서</th>
+                            <th>#</th>
+                            <th class="text-center">가격</th>
+                            <th class="text-center">소계</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- <div class="col-md-4" th:each="cartItem:${cart.cartItems}">
+
+                              <tr>
+                                <td > <em>[[${cartItem.value.book.name}</em></td>
+                                <td  style="text-align: center">[[${cartItem.value.quantity}]]</td>
+                                <td class="text-center">[[${cartItem.value.book.unitPrice}]]원</td>
+                                <td class="text-center">[[${cartItem.value.totalPrice}]]원</td>
+                              </tr>
+                              </div>
+                              <tr>
+                                <td> </td>
+                              <td> </td>
+                              <td class="text-right"><h5> <strong>총액: </strong></h5></td>
+                              <td class="text-center text-danger"><h4><strong>[[${order.cart.grandTotal}]]</strong></h4></td>
+                             </tr> -->
+                        </tbody>
+                    </table>
+                    <input type="hidden" name="_flowExecutionKey" value="${flowExecutionKey}"/>
+                    <button class="btn btn-default" name="_eventId_backToShippingInfo">이전</button>
+                    <button type="submit" class="btn btn-success" name="_eventId_orderConfirmed"> 주문완료</button>
+                    <button class="btn btn-default" name="_eventId_cancel">취소</button>
+                </div>
+            </div>
+            </form>
+    </div>
+</div>
+</body>
+</html>

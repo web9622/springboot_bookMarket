@@ -1,0 +1,62 @@
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>게시판 수정</title>
+  <link href="/BookMarket/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container py-4">
+  <th:block th:replace="~{/module/header}"></th:block>
+  <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+    <div class="container-fluid py-5">
+      <h1 class="display-5 fw-bold">게시판 수정</h1>
+      <p class="col-md-8 fs-4">BookMarket</p>
+    </div>
+  </div>
+  <div class="row align-items-md-stretch">
+
+    <form th:object="${boardFormDto}" name="board" th:action="@{/board/update/{id}(id=*{id})}" method="post">
+
+      <input type="hidden" name="id" class="form-control" th:field="*{id}"/>
+      <input type="hidden" name="writerid" class="form-control"
+             th:field="*{writerid}"/>
+
+      <div class="mb-3 row">
+        <label class="col-sm-2 control-label">제목</label>
+        <div class="col-sm-3">
+          <input type="text" name="title" class="form-control"
+                 th:field="*{title}"/>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-sm-2 control-label">작성자</label>
+        <div class="col-sm-3">
+          <input type="text" name="writer" class="form-control"
+                 th:field="*{writer}"/>
+        </div>
+      </div> <div class="mb-3 row">
+      <label class="col-sm-2 control-label">내용</label>
+      <div class="col-sm-5">
+          <textarea type="text" name="content" cols="50" rows="3" class="formcontrol"
+                    th:field="*{content}"></textarea>
+      </div>
+    </div>
+
+      <div class="mb-3 row">
+        <div class="col-sm-offset-2 col-sm-10">
+          <a href="/BookMarket/board/list" class="btn btn-primary">목록</a>
+
+          <input th:if="${buttonOk}" type="submit" class="btn btn-success"
+                 value="수정"/>
+
+          <a th:if="${buttonOk}" th:href="@{'/board/delete/' + ${id}}"
+             class="btn btn-danger">삭제</a>
+        </div>
+      </div>
+    </form>
+  </div>
+  <th:block th:replace="~{/module/footer}"></th:block>
+</div>
+</body>
+</html>

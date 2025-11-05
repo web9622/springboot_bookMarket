@@ -1,0 +1,63 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.4'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.springboot'
+version = '0.0.1-SNAPSHOT'
+
+jar{
+	enabled = false
+}
+//bootJar {
+//	archiveFileName = "${rootProject.name}-${version}.jar"
+//}
+
+bootJar{
+	archiveFileName="test1.jar"
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	all { //log4j2과의 충돌 방지를 위해 로그백 삭제
+     	exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+  }
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+	implementation group: 'com.mysql', name: 'mysql-connector-j'
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// Gson 추가
+	implementation 'com.google.code.gson:gson:2.10.1'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

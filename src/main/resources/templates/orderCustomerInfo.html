@@ -1,0 +1,42 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>고객 정보 입력</title>
+    <link href="/BookMarket/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container py-4">
+    <h2>고객 정보 입력</h2>
+    <form th:object="${customer}" th:action="@{/order/orderCustomerInfo}" method="post">
+        <div class="form-group">
+            <label>이름</label>
+            <input type="text" class="form-control" th:field="*{name}" />
+        </div>
+        <div class="form-group">
+            <label>이메일</label>
+            <input type="text" class="form-control" th:field="*{email}" />
+        </div>
+        <div class="form-group">
+            <label>전화번호</label>
+            <input type="text" class="form-control" th:field="*{phone}" />
+        </div>
+        <div class="form-group">
+            <label>국가</label>
+            <input type="text" class="form-control" th:field="*{address.country}" />
+        </div>
+        <div class="form-group">
+            <label>우편번호</label>
+            <input type="text" class="form-control" th:field="*{address.zipCode}" />
+        </div>
+        <div class="form-group">
+            <label>주소</label>
+            <input type="text" class="form-control" th:field="*{address.addressName}" />
+        </div>
+        <div class="form-group">
+            <label>상세주소</label>
+            <input type="text" class="form-control" th:field="*{address.detailAddress}" />
+        </div>
+        <button type="submit" class="btn btn-primary">다음 단계</button>
+    </form>
+</div>
+</body>
+</html>

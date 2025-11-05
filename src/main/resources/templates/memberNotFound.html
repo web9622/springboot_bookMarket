@@ -1,0 +1,31 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>예외처리</title>
+    <link href="/BookMarket/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container py-4">
+    <th:block th:replace="~{/module/header}"></th:block>
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-5">
+            <h2 class="alert alert-danger">
+                해당 도서가 존재하지 않습니다.<br>
+                도서ID : [[${invalidMemberId}]]
+            </h2>
+        </div>
+    </div>
+
+    <div class="row align-items-md-stretch">
+
+        <p>[[${url}]] </p>
+        <p>[[${exception}]] </p>
+        <p>
+            <a href="/BookMarket/books" class="btn btn-secondary">
+                도서목록 &raquo; </a>
+
+    </div>
+
+</div>
+</body>
+</html>
