@@ -162,10 +162,4 @@ BookMarket/
 * **개발자**: 윤혜정 (Hyejeong Yoon)
 * **GitHub**: [web9622](https://github.com/web9622)
 * **프로젝트명**: BookMarket
-
----
-
- 
-
-그것도 포함할까요?
 ```
